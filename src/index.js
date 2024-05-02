@@ -17,7 +17,7 @@ window.customElements.define(
             <b>Open console.</b>
         </div>
         
-        <button id="request-original" class="valid">Download PDF (<b>Original</b> implementation with responseType: 'blob')</button>
+        <button id="request-original" class="valid">Download PDF (<b>Original</b> implementation with responseType: 'blob')</button><br/>
         <button id="request-patched" class="invalid">Download PDF (<b>Patched</b> implementation with responseType: 'blob')</button>
       `;
     }
@@ -26,7 +26,7 @@ window.customElements.define(
       const [host, port] = ['192.168.100.6', 8000];
       const self = this;
 
-      async function requestDocument(event) {
+      async function requestDocument() {
         try {
           console.log('XMLHttpRequest with "responseType: blob"');
 
@@ -47,7 +47,7 @@ window.customElements.define(
       }
 
       async function requestDocumentOriginal() {
-        const originalXMLHttpRequest = window.CapacitorWebXMLHttpRequest.fullObject;
+        const originalXMLHttpRequest = window.CapacitorWebXMLHttpRequest.constructor;
 
         const req = new originalXMLHttpRequest();
 
@@ -59,6 +59,7 @@ window.customElements.define(
         req.addEventListener("load", responseCallback);
         req.responseType = 'blob';
         req.open("GET", `http://${host}:${port}/get-document`);
+        req.setRequestHeader('content-type', 'application/pdf');
         req.send();
       }
 

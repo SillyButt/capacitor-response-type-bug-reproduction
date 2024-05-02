@@ -5,7 +5,7 @@ async function requestListener(req, res) {
   switch (req.url) {
     case '/get-document':
       const file = await fs.readFile('dummy.pdf', { encoding: 'binary' });
-      res.writeHead(200, { 'Access-Control-Allow-Origin': '*' });
+      res.writeHead(200, { 'Access-Control-Allow-Origin': 'http://192.168.100.6:3000', 'Access-Control-Allow-Headers': '*' });
       res.write(file, 'binary');
       res.end();
       break;
